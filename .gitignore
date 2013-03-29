@@ -1,0 +1,12 @@
+Readme
+deploygate-icon.xcf
+deploygate-small.xcf
+deploygate-big.xcf
+deploygate-icon.png
+DeployGate/MessageLogs
+Temp
+Library
+*.csproj
+*.pidb
+*.sln
+*.userprefs
