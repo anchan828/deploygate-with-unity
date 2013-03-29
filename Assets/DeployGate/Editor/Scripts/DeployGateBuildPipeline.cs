@@ -68,7 +68,7 @@ namespace DeployGate
 				
 			} else {
 			
-				templeteManifest = string.Format ("{0}{1}PlaybackEngines{1}AndroidPlayer{1}AndroidManifest.xml", EditorApplication.applicationContentsPath, DeployGateUtility.SEPARATOR);
+				templeteManifest = File.ReadAllText( string.Format ("{0}{1}PlaybackEngines{1}AndroidPlayer{1}AndroidManifest.xml", EditorApplication.applicationContentsPath, DeployGateUtility.SEPARATOR) );
 			
 				templeteManifest = templeteManifest.Replace ("</manifest>", "<uses-permission android:name=\"android.permission.READ_LOGS\" /></manifest>");
 			
