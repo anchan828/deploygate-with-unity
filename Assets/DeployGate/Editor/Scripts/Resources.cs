@@ -1,5 +1,5 @@
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
+using System;
 
 namespace DeployGate.Resources
 {
@@ -8,7 +8,7 @@ namespace DeployGate.Resources
 	{
 		public string title;
 		public string text;
-		public System.DateTime date;
+		public DateTime date;
 		public string version;
 		public int versionCode;
 	}
@@ -16,7 +16,11 @@ namespace DeployGate.Resources
 	[System.Serializable]
 	public class TempPath
 	{
-		public string directryPath = Application.dataPath.Replace ("Assets", "DeployGate/Temp");
+		public string directryPath{
+			get{
+				return string.Format("DeployGate{0}Temp",DeployGateUtility.SEPARATOR);
+			}
+		}
 		public string messagePath = "";
 	}
 	

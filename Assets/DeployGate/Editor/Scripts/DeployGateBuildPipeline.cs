@@ -1,7 +1,7 @@
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System.IO;
 using DeployGate.Resources;
 
 namespace DeployGate
@@ -13,7 +13,7 @@ namespace DeployGate
 		public static void Build (Message message)
 		{
 			preference = Asset.Load<DeployGatePreference> ();
-			System.IO.Directory.CreateDirectory (preference.temp.directryPath);
+			Directory.CreateDirectory (preference.temp.directryPath);
 			
 			DeployGateUtility.MoveDeployGateSDK (DeployGateUtility.DEPLOYGATE_PLUGINS_PATH, DeployGateUtility.PLUGINS_PATH);
 			
@@ -31,7 +31,8 @@ namespace DeployGate
 			
 			DeployGatePreference.BuildType buildType = preference.buildType;
 			
-			string locationPath = string.Format ("{0}/{1}", preference.temp.directryPath, System.Guid.NewGuid ());
+			
+			string locationPath = string.Format ("{0}{1}{2}", preference.temp.directryPath, DeployGateUtility.SEPARATOR, System.Guid.NewGuid ());
 			
 			SaveTempMessage (message, locationPath + ".json");
 			
@@ -57,20 +58,21 @@ namespace DeployGate
 		private static void AddPermission (DeployGatePreference preference)
 		{
 			string templeteManifest = "";
-			string manifestPath = Application.dataPath + "/Plugins/Android/AndroidManifest.xml";
-			if (System.IO.File.Exists (manifestPath)) {
-				templeteManifest = System.IO.File.ReadAllText (manifestPath);
+			
+			string manifestPath = string.Format ("{0}{1}Plugins{1}Android{1}AndroidManifest.xml", Application.dataPath, DeployGateUtility.SEPARATOR);
+			if (File.Exists (manifestPath)) {
+				templeteManifest = File.ReadAllText (manifestPath);
 				
 				if (templeteManifest.Contains ("android.permission.READ_LOGS"))
 					return;
 				
 			} else {
 			
-				templeteManifest = System.IO.File.ReadAllText (EditorApplication.applicationContentsPath + "/PlaybackEngines/AndroidPlayer/AndroidManifest.xml");
+				templeteManifest = string.Format ("{0}{1}PlaybackEngines{1}AndroidPlayer{1}AndroidManifest.xml", EditorApplication.applicationContentsPath, DeployGateUtility.SEPARATOR);
 			
 				templeteManifest = templeteManifest.Replace ("</manifest>", "<uses-permission android:name=\"android.permission.READ_LOGS\" /></manifest>");
 			
-				System.IO.File.WriteAllText (manifestPath, templeteManifest);
+				File.WriteAllText (manifestPath, templeteManifest);
 				AssetDatabase.Refresh ();
 			}
 		}
@@ -78,9 +80,9 @@ namespace DeployGate
 		private static void SaveTempMessage (Message message, string tempPath)
 		{
 			message.date = System.DateTime.UtcNow;
-			System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo (Application.systemLanguage == SystemLanguage.Japanese ? "ja-JP" : "en-US");
-			message.title = message.date.ToLocalTime ().ToString ("U", culture) + "version=" + PlayerSettings.bundleVersion;
-			System.IO.File.WriteAllText (tempPath, JsonFx.Json.JsonWriter.Serialize (message));
+			System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo (I18n.local);
+			message.title = message.date.ToLocalTime ().ToString ("U", culture) + " version=" + PlayerSettings.bundleVersion;
+			File.WriteAllText (tempPath, JsonFx.Json.JsonWriter.Serialize (message));
 			preference.temp.messagePath = tempPath;
 		}
 		

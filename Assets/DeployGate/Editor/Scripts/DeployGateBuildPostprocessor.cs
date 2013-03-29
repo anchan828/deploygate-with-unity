@@ -1,7 +1,7 @@
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using System.IO;
 using DeployGate;
 using DeployGate.Resources;
 
@@ -13,7 +13,7 @@ namespace DeployGate
 		private static string pathToBuiltProject = "";
 		private static DeployGatePreference preference;
 
-		[PostProcessBuild]
+		[PostProcessBuild(9999)]
 		public static void OnPostprocessBuild (BuildTarget target, string pathToBuiltProject)
 		{
 			DeployGateBuildPostprocessor.pathToBuiltProject = pathToBuiltProject;
@@ -49,7 +49,7 @@ namespace DeployGate
 				SaveMessage ();
 		
 				//Delete Temp
-				System.IO.Directory.Delete (preference.temp.directryPath, true);
+				Directory.Delete (preference.temp.directryPath, true);
 				DeployGateUtility.MoveDeployGateSDK (DeployGateUtility.PLUGINS_PATH, DeployGateUtility.DEPLOYGATE_PLUGINS_PATH);
 				Asset.Load<DeployGatePreference> ().temp.messagePath = "";
 			
@@ -71,24 +71,24 @@ namespace DeployGate
 		
 		private static string GetMessage (string tempMessagePath)
 		{
-			string text = System.IO.File.ReadAllText (tempMessagePath ?? "");
+			string text = File.ReadAllText (tempMessagePath ?? "");
 			return string.IsNullOrEmpty (text) ? string.Empty : JsonFx.Json.JsonReader.Deserialize<Message> (text).text;
 		}
 		
 		private static byte[] GetAPKBytes ()
 		{
-			return System.IO.File.ReadAllBytes (pathToBuiltProject);
+			return File.ReadAllBytes (pathToBuiltProject);
 		}
 		
 		private static void SaveMessage ()
 		{
-			string text = System.IO.File.ReadAllText (pathToBuiltProject.Replace (".apk", ".json"));
+			string text = File.ReadAllText (pathToBuiltProject.Replace (".apk", ".json"));
 			if (string.IsNullOrEmpty (text))
 				return;
 			Message message = JsonFx.Json.JsonReader.Deserialize<Message> (text);
 			
 			if (!string.IsNullOrEmpty (message.text))
-				System.IO.File.WriteAllText (DeployGateUtility.messageLogFolderPath + "/" + message.date.ToString ("u") + ".json", text);
+				File.WriteAllText (DeployGateUtility.messageLogFolderPath + DeployGateUtility.SEPARATOR + message.date.ToString ("u").Replace(":","-") + ".json", text);
 		}
 
 		

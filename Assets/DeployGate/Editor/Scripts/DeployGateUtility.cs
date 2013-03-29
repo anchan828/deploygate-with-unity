@@ -1,7 +1,9 @@
-using UnityEngine;
-using System.Collections;
-using DeployGate;
+﻿using UnityEngine;
 using UnityEditor;
+using System.IO;
+using DeployGate;
+
+
 namespace DeployGate
 {
 	public class DeployGateUtility
@@ -12,44 +14,46 @@ namespace DeployGate
 		public static readonly GUIContent DEPLOYGATE_ACCOUNT_URL = new GUIContent ("https://deploygate.com/settings");
 		public static readonly GUIContent DEPLOYGATE_DOCS_URL = new GUIContent ("https://deploygate.com/docs");
 		public const string PUSH_URL = "https://deploygate.com/api/users/{0}/apps";
-		public const string DEPLOYGATE_PLUGINS_PATH = "Assets/DeployGate/Plugins";
-		public const string PLUGINS_PATH = "Assets/Plugins";
+		public static readonly char SEPARATOR = Path.DirectorySeparatorChar;
+		public static readonly string DEPLOYGATE_PLUGINS_PATH = string.Format ("Assets{0}DeployGate{0}Plugins", SEPARATOR);
+		public static readonly string PLUGINS_PATH = string.Format ("Assets{0}Plugins", SEPARATOR);
 		
-		private static string currentFolderPath {
+		private static string DeployGateFolderPath {
 			get {
-				string currentFilePath = new System.Diagnostics.StackTrace (true).GetFrame (0).GetFileName ();
-				return "Assets" + currentFilePath.Substring (0, currentFilePath.LastIndexOf ("/") + 1).Replace (Application.dataPath, string.Empty);
+				string deployGateUtilityPath = new System.Diagnostics.StackTrace (true).GetFrame (0).GetFileName ();
+				return deployGateUtilityPath.Replace (Application.dataPath.Replace (Path.AltDirectorySeparatorChar, SEPARATOR), "Assets").Replace (string.Format ("DeployGate{0}Editor{0}Scripts{0}DeployGateUtility.cs", SEPARATOR), "DeployGate");
 			}
 		}
 	
 		public static string scriptsFolderPath {
 			get {
-				return currentFolderPath;
+				
+				return string.Format ("{0}{1}Editor{1}Scripts", DeployGateFolderPath, SEPARATOR);
 			}
 		}
 	
 		public static string imagesFolderPath {
 			get {
-				return currentFolderPath.Replace ("Scripts", "Images");
+				return string.Format ("{0}{1}Editor{1}Images", DeployGateFolderPath, SEPARATOR);
 			}
 		}
 
 		public static string settingsFolderPath {
 			get {
-				return currentFolderPath.Replace ("Scripts", "Settings");
+				return string.Format ("{0}{1}Editor{1}Settings", DeployGateFolderPath, SEPARATOR);
 			}
 		}
 	
 		public static string messageLogFolderPath {
 			get {
-				return  Application.dataPath + "/../DeployGate/MessageLogs";
+				return string.Format ("DeployGate{0}MessageLogs", SEPARATOR);
 			}
 		}
 		
 		public static void MoveDeployGateSDK (string from, string to)
 		{
-			MoveAsset (from + "/Android/deploygatesdk.jar", to + "/Android/deploygatesdk.jar");
-			MoveAsset (from + "/DeployGateSDK.cs", to + "/DeployGateSDK.cs");
+			MoveAsset (string.Format ("{0}{1}Android{1}deploygatesdk.jar", from, Path.AltDirectorySeparatorChar), string.Format ("{0}{1}Android{1}deploygatesdk.jar", to, SEPARATOR));
+			MoveAsset (string.Format ("{0}{1}DeployGateSDK.cs", from, Path.AltDirectorySeparatorChar), string.Format ("{0}{1}DeployGateSDK.cs", to, SEPARATOR));
 			AssetDatabase.Refresh ();
 		}
 

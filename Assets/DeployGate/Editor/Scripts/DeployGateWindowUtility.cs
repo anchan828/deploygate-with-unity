@@ -1,5 +1,4 @@
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEditor;
 using DeployGate;
 
@@ -27,9 +26,7 @@ namespace DeployGate
 
 		protected  static void DrawDeployGateLogo ()
 		{
-				
-			texture = texture ?? (Texture)AssetDatabase.LoadAssetAtPath (DeployGateUtility.imagesFolderPath + "DeployGate_Logo.png", typeof(Texture));
-			
+			texture = texture ?? (Texture)AssetDatabase.LoadAssetAtPath (DeployGateUtility.imagesFolderPath + DeployGateUtility.SEPARATOR + "DeployGate_Logo.png", typeof(Texture));
 			Graphics.DrawTexture (new Rect (13, Screen.height - 95, 100, 100), texture);
 		}
 

@@ -1,9 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
+using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using DeployGate.Resources;
-using System.Linq;
+
 
 namespace DeployGate
 {
@@ -61,7 +62,7 @@ namespace DeployGate
 						messages [0].text = string.Empty;
 						_Repaint ();
 					} else {
-						System.IO.File.Delete (DeployGateUtility.messageLogFolderPath + "/" + messages [selectedMessage].date.ToString ("u") + ".json");
+						File.Delete (DeployGateUtility.messageLogFolderPath + "/" + messages [selectedMessage].date.ToString ("u") + ".json");
 						Reset ();
 					}
 				}
@@ -112,11 +113,11 @@ namespace DeployGate
 		static bool CanBuild (ref string error)
 		{
 			if (string.IsNullOrEmpty (preference.user.username) || string.IsNullOrEmpty (preference.user.token)) {
-				error = "Please Enter Username or APIKey";
+				error = I18n.profileError;
 				DeployGateWindow.GetWindow ().selection = DeployGateWindowUtility.DeployGateSelection.Setings;
 			}
-			if (Application.internetReachability == NetworkReachability.NotReachable) {
-				error = "Not connecting to network";
+			if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable()) {
+				error = I18n.networkError;
 			}
 			return string.IsNullOrEmpty (error);
 		}
@@ -129,11 +130,11 @@ namespace DeployGate
 
 		static void GetMessages ()
 		{
-			System.IO.Directory.CreateDirectory (DeployGateUtility.messageLogFolderPath);
-			string[] files = System.IO.Directory.GetFiles (DeployGateUtility.messageLogFolderPath, "*.json");
+			Directory.CreateDirectory (DeployGateUtility.messageLogFolderPath);
+			string[] files = Directory.GetFiles (DeployGateUtility.messageLogFolderPath, "*.json");
 		
 			foreach (string file in files) {
-				messages.Add (JsonFx.Json.JsonReader.Deserialize<Message> (System.IO.File.ReadAllText (file)));
+				messages.Add (JsonFx.Json.JsonReader.Deserialize<Message> (File.ReadAllText (file)));
 			}
 			messages.Add (new Message {title="new Message"});
 			messages.Reverse ();
