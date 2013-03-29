@@ -3,7 +3,6 @@ using UnityEditor;
 using System.IO;
 using DeployGate;
 
-
 namespace DeployGate
 {
 	public class DeployGateUtility
@@ -52,8 +51,11 @@ namespace DeployGate
 		
 		public static void MoveDeployGateSDK (string from, string to)
 		{
-			MoveAsset (string.Format ("{0}{1}Android{1}deploygatesdk.jar", from, Path.AltDirectorySeparatorChar), string.Format ("{0}{1}Android{1}deploygatesdk.jar", to, SEPARATOR));
-			MoveAsset (string.Format ("{0}{1}DeployGateSDK.cs", from, Path.AltDirectorySeparatorChar), string.Format ("{0}{1}DeployGateSDK.cs", to, SEPARATOR));
+			Directory.CreateDirectory("Assets/Plugins");
+			Directory.CreateDirectory("Assets/Plugins/Android");
+			AssetDatabase.Refresh ();
+			MoveAsset (string.Format ("{0}{1}Android{1}deploygatesdk.jar", from, SEPARATOR), string.Format ("{0}{1}Android{1}deploygatesdk.jar", to, SEPARATOR));
+			MoveAsset (string.Format ("{0}{1}DeployGateSDK.cs", from, SEPARATOR), string.Format ("{0}{1}DeployGateSDK.cs", to, SEPARATOR));
 			AssetDatabase.Refresh ();
 		}
 
