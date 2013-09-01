@@ -10,3 +10,4 @@ Library
 *.pidb
 *.sln
 *.userprefs
+obj
