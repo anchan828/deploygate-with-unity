@@ -107,6 +107,7 @@ namespace DeployGate
 				} else {
 					DeployGateWindow.GetWindow ().ShowNotification (new GUIContent (error));
 				}
+                EditorGUIUtility.ExitGUI();
 			}
 		}
 		
