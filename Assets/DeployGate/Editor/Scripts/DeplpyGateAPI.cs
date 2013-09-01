@@ -47,7 +47,7 @@ namespace DeployGate
         private static string GetMessage(string tempMessagePath)
         {
             string text = File.ReadAllText(tempMessagePath ?? "");
-            return string.IsNullOrEmpty(text) ? string.Empty : JsonFx.Json.JsonReader.Deserialize<Message>(text).text;
+            return string.IsNullOrEmpty(text) ? string.Empty :MiniJSON.Json.Deserialize<Message>(text).text;
         }
 
         private static byte[] GetAPKBytes(string pathToBuiltProject)
@@ -60,10 +60,10 @@ namespace DeployGate
             string text = File.ReadAllText(pathToBuiltProject.Replace(".apk", ".json"));
             if (string.IsNullOrEmpty(text))
                 return;
-            Message message = JsonFx.Json.JsonReader.Deserialize<Message>(text);
+            Message message = MiniJSON.Json.Deserialize<Message>(text);
 
             if (!string.IsNullOrEmpty(message.text))
-                File.WriteAllText(DeployGateUtility.messageLogFolderPath + DeployGateUtility.SEPARATOR + message.date.ToString("u").Replace(":", "-") + ".json", text);
+                File.WriteAllText(DeployGateUtility.messageLogFolderPath + DeployGateUtility.SEPARATOR + message.date.Replace(":", "-") + ".json", text);
         }
     }
 }
