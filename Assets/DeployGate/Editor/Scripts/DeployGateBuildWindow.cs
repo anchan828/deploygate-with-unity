@@ -106,7 +106,7 @@ namespace DeployGate
 
         static void DrawBuildButton()
         {
-            if (GUI.Button(new Rect(Screen.width * 0.8f, Screen.height - 40, Screen.width * 0.18f, 30), "Build & Upload"))
+            if (GUI.Button(new Rect(Screen.width * 0.8f, Screen.height - 40, Screen.width * 0.20f, 30), "Build & Upload"))
             {
                 string error = "";
                 if (CanBuild(ref error))
