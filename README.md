@@ -1,5 +1,4 @@
-# DeployGate with Unity v1.0
-
+# DeployGate with Unity v1.1
 ![](https://raw.github.com/anchan828/file-place/master/DeployGate/deploygate-icon.png)
 
 ##1.これは何？
@@ -10,17 +9,17 @@ Unityから[DeployGate](https://deploygate.com)へ楽にUpdate & SDKの使用が
 
 ##3.ユーザー名とAPIキーの設定
 Uploadするのに必要なユーザー名とAPIキーを設定します。
-「Window」→「DeployGate」からDeployGateWindowを開き、**Settings** の`Your Name`と`API Key`を[DeployGateのアカウントページ](https://deploygate.com/settings)から取得し、設定して下さい。
+「File」→「DeployGate」からDeployGateWindowを開き、**Settings**の`Your Name`と`API Key`を[DeployGateのアカウントページ](https://deploygate.com/settings)から取得し、設定して下さい。
 
 
 ![](https://raw.github.com/anchan828/file-place/master/DeployGate/Settings.png)
 
 ##4.リモートLogCatを有効にするには
-DeploygateSDKの機能リモートLogCatを有効にするには **Settings** の「Include android.permission.READ_LOGS」にチェックを入れて下さい
+DeploygateSDKの機能リモートLogCatを有効にするには**Settings**の「Include android.permission.READ_LOGS」にチェックを入れて下さい
 
 
 ##5.ビルド & アップロードを行う
-**Build & Upload** の「Build & Upload」ボタンをおすことでDeploygateにアップロードすることができます。
+**Build & Upload**の「Build & Upload」ボタンをおすことでDeploygateにアップロードすることができます。
 
 ![](https://raw.github.com/anchan828/file-place/master/DeployGate/BuildUpload.png)
 
@@ -83,17 +82,15 @@ void Start ()
 「Assets/Plugins/Android」にAndroidManifest.xmlを作成し**android.permission.READ_LOGS**のPermissionを追加して下さい
 
 #更新履歴
+2013/9/3  v1.1 公開
+
+* メンバーの確認・追加・削除ができるように　（削除は現在Macのみ対応）
+
+![](https://dl.dropboxusercontent.com/u/153254465/DeployGateWithUnity/Screen%20Shot%202013-09-03%20at%204.32.23.png)
+
+
+* JSONパーサーをJsonFxからMiniJSONへ変更
+* InvalidOperationExceptionが発生していた問題を修正
+
 
 2013/3/29 v1.0 githubに公開
-
-#License
-
-```
-Copyright (c) 2013 Keigo Ando
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```

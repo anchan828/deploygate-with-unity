@@ -7,12 +7,12 @@ namespace DeployGate
 {
 	public class DeployGateUtility
 	{
-		public static readonly GUIContent DEPLOYGATE_URL = new GUIContent ("https://deploygate.com/");
+	    public static readonly GUIContent DEPLOYGATE_URL = new GUIContent ("https://deploygate.com/");
 		public static readonly GUIContent DEPLOYGATE_DASHBOARD_URL = new GUIContent ("https://deploygate.com/dashboard");
 		public static readonly GUIContent DEPLOYGATE_REMOTE_LOGCAT_URL = new GUIContent ("https://deploygate.com/docs/sdk#remote-logcat");
 		public static readonly GUIContent DEPLOYGATE_ACCOUNT_URL = new GUIContent ("https://deploygate.com/settings");
 		public static readonly GUIContent DEPLOYGATE_DOCS_URL = new GUIContent ("https://deploygate.com/docs");
-		public const string PUSH_URL = "https://deploygate.com/api/users/{0}/apps";
+	
 		public static readonly char SEPARATOR = Path.DirectorySeparatorChar;
 		public static readonly string DEPLOYGATE_PLUGINS_PATH = string.Format ("Assets{0}DeployGate{0}Plugins", SEPARATOR);
 		public static readonly string PLUGINS_PATH = string.Format ("Assets{0}Plugins", SEPARATOR);
