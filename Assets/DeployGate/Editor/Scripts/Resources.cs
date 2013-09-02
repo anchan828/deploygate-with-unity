@@ -24,6 +24,26 @@ namespace DeployGate.Resources
             return json;
         }
     }
+    [System.Serializable]
+    public class MembersInfo
+    {
+        public bool error;
+        public Usage usage;
+        public Member[] members;
+    }
+
+    [System.Serializable]
+    public class Member
+    {
+        public string name;
+        public int role;
+    }
+
+    public class Usage
+    {
+        public int used;
+        public int max;
+    }
 
     [System.Serializable]
     public class TempPath

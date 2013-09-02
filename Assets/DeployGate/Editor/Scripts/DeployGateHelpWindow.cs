@@ -20,7 +20,6 @@ namespace DeployGate
 			Headline ("HowTo");
 			Howto ();
 			
-			
 			OnGUI_DeployGateInfo ();
 		}
 		

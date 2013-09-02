@@ -3,6 +3,7 @@
 namespace DeployGate
 {
     using Resources;
+    using UnityEngine;
     /*
  * Copyright (c) 2013 Calvin Rien
  *
@@ -103,17 +104,58 @@ namespace DeployGate
                 object deserialize = Deserialize(json);
 
                 object returnValue = null;
-
+                var dic = deserialize as Dictionary<string, object>;
                 if (typeof(T) == typeof(Message))
                 {
                     Message message = new Message();
-                    var dic = deserialize as Dictionary<string, object>;
-                    message.title = dic.GetValue("title") as string;
-                    message.text = dic.GetValue("text") as string;
-                    message.date = dic.GetValue("date") as string;
-                    message.version = dic.GetValue("version") as string;
-                    message.versionCode = dic.GetValue("versionCode") is int ? (int)dic.GetValue("versionCode") : 0;
+                    message.title = Convert.ToString(dic.GetValue("title"));
+                    message.text = Convert.ToString(dic.GetValue("text"));
+                    message.date = Convert.ToString(dic.GetValue("date"));
+                    message.version = Convert.ToString(dic.GetValue("version"));
+                    message.versionCode = Convert.ToInt32( dic.GetValue("versionCode"));
                     returnValue = message;
+                }
+
+                if (typeof(T) == typeof(MembersInfo))
+                {
+                    MembersInfo membersInfo = new MembersInfo();
+                    membersInfo.error = bool.Parse(dic.GetValue("error").ToString());
+
+                    if (!membersInfo.error)
+                    {
+                        var results = dic["results"] as Dictionary<string, object>;
+
+                        var usage = results.GetValue("usage") as Dictionary<string, object>;
+                        var users = results.GetValue("users") as List<object>;
+                       
+                        var members = new List<Member>();
+                        foreach (var user in users)
+                        {
+                            Member member = Deserialize<Member>(Serialize(user));
+                            if (member != null)
+                                members.Add(member);
+                        }
+
+                        membersInfo.usage = Deserialize<Usage>(Serialize(usage));
+                        membersInfo.members = members.ToArray();
+                    }
+                    returnValue = membersInfo;
+                }
+
+                if (typeof(T) == typeof(Member))
+                {
+                    Member member = new Member();
+                    member.name = Convert.ToString(dic.GetValue("name"));
+                    member.role = Convert.ToInt32(dic.GetValue("role"));
+                    returnValue = member;
+                }
+
+                if (typeof(T) == typeof(Usage))
+                {
+                    Usage usage = new Usage();
+                    usage.used = Convert.ToInt32(dic.GetValue("used"));
+                    usage.max = Convert.ToInt32(dic.GetValue("max"));
+                    returnValue = usage;
                 }
 
                 return (T)returnValue;

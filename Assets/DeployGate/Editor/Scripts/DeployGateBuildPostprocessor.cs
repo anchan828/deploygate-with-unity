@@ -28,7 +28,7 @@ namespace DeployGate
 		
 			if (pathToBuiltProject.LastIndexOf (".apk") != -1) {
 		
-                DeplpyGateAPI.Push(pathToBuiltProject);
+                DeployGateAPI.Push(pathToBuiltProject);
                 
 				//Delete Temp
 				Directory.Delete (preference.temp.directryPath, true);
