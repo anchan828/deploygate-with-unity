@@ -10,7 +10,7 @@ PlayerSettings:
   targetGlesGraphics: 1
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: "\u30C8\u30C3\u30D7\u30B2\u30FC\u30C8"
+  companyName: Unity Technologies Japan
   productName: deploygate-with-unity
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -33,15 +33,18 @@ PlayerSettings:
   use32BitDisplayBuffer: 0
   use24BitDepthBuffer: 0
   defaultIsFullScreen: 0
-  runInBackground: 0
+  defaultIsNativeResolution: 1
+  runInBackground: 1
   captureSingleScreen: 0
   Override IPod Music: 0
+  Prepare IOS For Recording: 0
   enableHWStatistics: 1
   usePlayerLog: 1
   stripPhysics: 0
+  forceSingleInstance: 0
   resizableWindow: 0
   useMacAppStoreValidation: 0
-  xboxSkinOnGPU: 1
+  gpuSkinning: 1
   xboxEnableAvatar: 0
   xboxEnableKinect: 0
   xboxEnableKinectAutoTracking: 0
@@ -66,8 +69,9 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  iPhoneBundleIdentifier: com.Company.ProductName
-  iPhoneBundleVersion: 1.1
+  iPhoneBundleIdentifier: com.kyusyukeigo.deploygate
+  productGUID: db2cb5ad1951c4addade8cde8a993f97
+  iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 6
   AndroidPreferredInstallLocation: 1
@@ -96,10 +100,14 @@ PlayerSettings:
   iPadHighResLandscapeSplashScreen: {fileID: 0}
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
-  AndroidKeystoreName: 
+  AndroidKeystoreName: C:/Users/Keigo Ando/Documents/keystore/debug.keystore
   AndroidKeyaliasName: 
   resolutionDialogBanner: {fileID: 0}
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - m_Icon: {fileID: 0}
+      m_Size: 128
   m_BuildTargetBatching: []
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
@@ -130,6 +138,7 @@ PlayerSettings:
   ps3BackgroundPath: 
   ps3SoundPath: 
   ps3TrophyCommId: 
+  ps3NpCommunicationPassphrase: 
   ps3TrophyPackagePath: 
   ps3BootCheckMaxSaveGameSizeKB: 128
   ps3TrophyCommSig: 
@@ -158,7 +167,27 @@ PlayerSettings:
   metroSplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   metroSplashScreenUseBackgroundColor: 0
   metroCapabilities: {}
+  metroCompilationOverrides: 1
+  blackberryDeviceAddress: 
+  blackberryDevicePassword: 
+  blackberryTokenPath: 
+  blackberryTokenExires: 
+  blackberryTokenAuthor: 
+  blackberryTokenAuthorId: 
+  blackberryAuthorId: 
+  blackberryCskPassword: 
+  blackberrySaveLogPath: 
+  blackberryAuthorIdOveride: 0
+  blackberrySharedPermissions: 0
+  blackberryCameraPermissions: 0
+  blackberryGPSPermissions: 0
+  blackberryDeviceIDPermissions: 0
+  blackberryMicrophonePermissions: 0
+  blackberryBuildId: 0
+  blackberryLandscapeSplashScreen: {fileID: 0}
+  blackberryPortraitSplashScreen: {fileID: 0}
+  blackberrySquareSplashScreen: {fileID: 0}
   firstStreamedLevelWithResources: 0
   unityRebuildLibraryVersion: 9
-  unityForwardCompatibleVersion: 37
+  unityForwardCompatibleVersion: 38
   unityStandardAssetsVersion: 0

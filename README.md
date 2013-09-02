@@ -1,4 +1,4 @@
-# DeployGate with Unity v1.0
+# DeployGate with Unity v1.1
 ![](https://raw.github.com/anchan828/file-place/master/DeployGate/deploygate-icon.png)
 
 ##1.これは何？
@@ -82,5 +82,15 @@ void Start ()
 「Assets/Plugins/Android」にAndroidManifest.xmlを作成し**android.permission.READ_LOGS**のPermissionを追加して下さい
 
 #更新履歴
+2013/9/3  v1.1 公開
+
+* メンバーの確認・追加・削除ができるように　（削除は現在Macのみ対応）
+
+![](https://dl.dropboxusercontent.com/u/153254465/DeployGateWithUnity/Screen%20Shot%202013-09-03%20at%204.32.23.png)
+
+
+* JSONパーサーをJsonFxからMiniJSONへ変更
+* InvalidOperationExceptionが発生していた問題を修正
+
 
 2013/3/29 v1.0 githubに公開
