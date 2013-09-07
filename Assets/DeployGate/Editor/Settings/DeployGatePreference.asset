@@ -16,6 +16,7 @@ MonoBehaviour:
     token: c35a3ac436044937f18e8d5e700fb0730d1f40f5
   temp:
     messagePath: 
-  includeReadLog: 0
+  includeReadLog: 1
   buildType: 0
   forceInternetPermission: 1
+  language: 1

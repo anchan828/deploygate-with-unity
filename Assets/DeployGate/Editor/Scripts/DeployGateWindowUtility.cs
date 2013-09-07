@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEditor;
-using DeployGate;
 
 namespace DeployGate
 {
     public class DeployGateWindowUtility
     {
         protected static void Headline(string text)
+        {
+            Headline(new GUIContent(text));
+        }
+
+        protected static void Headline(GUIContent text)
         {
             GUIStyle style = new GUIStyle(EditorStyles.label);
             style.stretchWidth = false;
@@ -16,7 +21,29 @@ namespace DeployGate
             style.fontStyle = FontStyle.Bold;
             GUILayout.Label(text, style);
         }
+        private static GUISkin skin;
 
+        public static GUIStyle GetStyle(string name)
+        {
+            if (!skin) LoadGUISkin();
+            GUIStyle style = skin.FindStyle(name);
+            if (EditorGUIUtility.isProSkin)
+            {
+                GUIStyle pStyle = skin.FindStyle(name + "_p");
+                if (pStyle != null) style = pStyle;
+            }
+            return style ?? skin.label;
+        }
+
+        private static void LoadGUISkin()
+        {
+            string guiskinPath = AssetDatabase.GetAllAssetPaths().ToList().Find(path => path.EndsWith("DeployGateGUISkin.guiskin"));
+
+            if (!string.IsNullOrEmpty(guiskinPath))
+            {
+                skin = AssetDatabase.LoadAssetAtPath(guiskinPath, typeof(GUISkin)) as GUISkin;
+            }
+        }
         protected static void OnGUI_DeployGateInfo()
         {
             DrawDeployGateLogo();
@@ -26,7 +53,7 @@ namespace DeployGate
 
         protected static void DrawDeployGateLogo()
         {
-            texture = texture ?? (Texture)AssetDatabase.LoadAssetAtPath(DeployGateUtility.imagesFolderPath + DeployGateUtility.SEPARATOR + "DeployGate_Logo.png", typeof(Texture));
+            texture = texture ?? (Texture)AssetDatabase.LoadAssetAtPath(DeployGateUtility.imagesFolderPath + DeployGateUtility.Separator + "DeployGate_Logo.png", typeof(Texture));
             Graphics.DrawTexture(new Rect(13, Screen.height - 95, 100, 100), texture);
         }
 
@@ -100,6 +127,17 @@ namespace DeployGate
             Members = 1,
             Setings = 2,
             Help = 3
+        }
+
+        public static void SetWindowSize(EditorWindow window)
+        {
+            int left = EditorPrefs.GetInt("UnityEditor.PreferencesWindowx", 96);
+            int top = EditorPrefs.GetInt("UnityEditor.PreferencesWindowy", 271);
+            int width = EditorPrefs.GetInt("UnityEditor.PreferencesWindoww", 500);
+            int height = EditorPrefs.GetInt("UnityEditor.PreferencesWindowh", 400);
+            window.position = new Rect(left, top, width, height);
+            window.minSize = new Vector2(width, height);
+            window.maxSize = window.minSize;
         }
     }
 

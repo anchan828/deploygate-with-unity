@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 
 namespace DeployGate.Resources
 {
-    [System.Serializable]
+    [Serializable]
     public class Message
     {
         public string title;
@@ -24,7 +23,7 @@ namespace DeployGate.Resources
             return json;
         }
     }
-    [System.Serializable]
+    [Serializable]
     public class MembersInfo
     {
         public bool error;
@@ -32,7 +31,7 @@ namespace DeployGate.Resources
         public Member[] members;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Member
     {
         public string name;
@@ -45,20 +44,20 @@ namespace DeployGate.Resources
         public int max;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class TempPath
     {
         public string directryPath
         {
             get
             {
-                return string.Format("DeployGate{0}Temp", DeployGateUtility.SEPARATOR);
+                return string.Format("DeployGate{0}Temp", DeployGateUtility.Separator);
             }
         }
         public string messagePath = "";
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UserInfo
     {
         public string username;

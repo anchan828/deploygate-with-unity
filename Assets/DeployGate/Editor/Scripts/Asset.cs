@@ -4,41 +4,46 @@ using System.IO;
 
 namespace DeployGate
 {
-	public class Asset
-	{
-		public static void  Save <T> (T asset) where T : ScriptableObject
+		public class Asset
 		{
-			T _asset = LoadAsset<T> ();
-			
-			if (_asset == null)
-				AssetDatabase.CreateAsset (asset, GetAssetPath<T> ());
-			
-			EditorUtility.SetDirty (asset);
-			AssetDatabase.SaveAssets ();
-			AssetDatabase.Refresh ();
-		}
-		
-		public static T Load<T> () where T : ScriptableObject
-		{
-			T asset = LoadAsset<T> ();
-			if (asset == null) {
-				asset = ScriptableObject.CreateInstance<T> ();
-				Save<T> (asset);
-			}
-			return asset;
-		}
+				private static DeployGatePreference _preference;
 
-		private static T LoadAsset<T> () where T : ScriptableObject
-		{
-			if (!Directory.Exists (DeployGateUtility.settingsFolderPath))
-				Directory.CreateDirectory (DeployGateUtility.settingsFolderPath);
-			string assetPath = GetAssetPath<T> ();
-			return (T)AssetDatabase.LoadAssetAtPath (assetPath, typeof(T));
-		}
+				public static DeployGatePreference preference {
+						get {
+								if (_preference == null) {
+										_preference = Load<DeployGatePreference> ();
+								}
+								return _preference;
+						}
+				}
 
-		private static string GetAssetPath<T> () where T : ScriptableObject
-		{
-			return DeployGateUtility.settingsFolderPath + DeployGateUtility.SEPARATOR + typeof(T).Name + ".asset";
+				public static void Save<T> (T asset) where T : ScriptableObject
+				{
+						EditorUtility.SetDirty (asset);
+						AssetDatabase.SaveAssets ();
+						AssetDatabase.Refresh ();
+				}
+
+				public static T Load<T> () where T : ScriptableObject
+				{
+						var asset = LoadAsset<T> ();
+						if (asset == null) {
+								asset = ScriptableObject.CreateInstance<T> ();
+								Save (asset);
+						}
+						return asset;
+				}
+
+				private static T LoadAsset<T> () where T : ScriptableObject
+				{
+						Directory.CreateDirectory (DeployGateUtility.settingsFolderPath);
+						string assetPath = GetAssetPath<T> ();
+						return (T)AssetDatabase.LoadAssetAtPath (assetPath, typeof(T));
+				}
+
+				private static string GetAssetPath<T> () where T : ScriptableObject
+				{
+						return DeployGateUtility.settingsFolderPath + DeployGateUtility.Separator + typeof(T).Name + ".asset";
+				}
 		}
-	}
 }

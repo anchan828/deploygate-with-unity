@@ -5,25 +5,23 @@ namespace DeployGate
 {
     public class DeployGateWindow : EditorWindow
     {
-        private string[] secsions = new string[] { "Build & Upload", "Members", "Settings", "Help" };
-        private DeployGatePreference preference;
+        private GUIContent[] secsions = new GUIContent[] { I18n.upload, I18n.member, I18n.settings, I18n.help };
 
         void OnEnable()
         {
-            preference = Asset.Load<DeployGatePreference>();
-            DeployGateBuildWindow.Reset();
+            DeployGateUploadWindow.Reset();
             EditorUtility.UnloadUnusedAssets();
         }
 
         void OnDisable()
         {
-            Asset.Save<DeployGatePreference>(preference);
+            Asset.Save(Asset.preference);
         }
 
         public static DeployGateWindow GetWindow()
         {
-            DeployGateWindow window = GetWindow<DeployGateWindow>(true, "DeployGateWindow");
-            SetWindowSize(window);
+            var window = GetWindow<DeployGateWindow>(true, "DeployGateWindow");
+            DeployGateWindowUtility.SetWindowSize(window);
             return window;
         }
 
@@ -32,78 +30,53 @@ namespace DeployGate
             GetWindow<DeployGateWindow>().Close();
         }
 
-        private static void SetWindowSize(EditorWindow window)
-        {
-            int left = EditorPrefs.GetInt("UnityEditor.PreferencesWindowx", 96);
-            int top = EditorPrefs.GetInt("UnityEditor.PreferencesWindowy", 271);
-            int width = EditorPrefs.GetInt("UnityEditor.PreferencesWindoww", 500);
-            int height = EditorPrefs.GetInt("UnityEditor.PreferencesWindowh", 400);
-            window.position = new Rect(left, top, width, height);
-            window.minSize = new Vector2(width, height);
-            window.maxSize = window.minSize;
-        }
-
         private GUIStyle sectionStyle = new GUIStyle("PreferencesSection");
         public DeployGateWindowUtility.DeployGateSelection selection = DeployGateWindowUtility.DeployGateSelection.BuildUpload;
 
         void OnGUI()
         {
-            try
+            secsions = secsions = new[] { I18n.upload, I18n.member, I18n.settings, I18n.help };
+            GUILayout.BeginHorizontal();
             {
-                GUILayout.BeginHorizontal();
+                GUILayout.BeginVertical(GUILayout.Width(120));
                 {
-                    GUILayout.BeginVertical(GUILayout.Width(120));
-                    {
-                        ///===============
-                        ///  SelectionBox
-                        ///===============
-
-                        GUILayout.Space(30);
-                        EditorGUIUtility.LookLikeControls(180f);
-                        GUI.DrawTexture(new Rect(0, 0, Screen.width * 0.24f, Screen.height), DeployGateWindowUtility.backgroundTexture);
-                        GUI.Label(new Rect(0, 0, Screen.width * 0.24f, Screen.height), "", "PreferencesSectionBox");
-                        sectionStyle.normal.textColor = EditorGUIUtility.isProSkin ? new Color(0.7f, 0.7f, 0.7f, 1) : Color.black;
-                        selection = (DeployGateWindowUtility.DeployGateSelection)GUILayout.SelectionGrid((int)selection, secsions, 1, sectionStyle);
-                        sectionStyle.onNormal.background = DeployGateWindowUtility.onNomalTexture;
-                    }
-                    GUILayout.EndVertical();
-
-
-                    GUILayout.BeginVertical();
-                    {
-                        ///==============
-                        ///  Selections
-                        ///==============
-
-                        switch (selection)
-                        {
-                            case DeployGateWindowUtility.DeployGateSelection.BuildUpload:
-                                DeployGateBuildWindow.OnGUI_BuildWindow(preference);
-                                break;
-
-                            case DeployGateWindowUtility.DeployGateSelection.Members:
-                                DeployGateMembersWindow.OnGUI_DeployGateMembersWindow();
-                                break;
-
-                            case DeployGateWindowUtility.DeployGateSelection.Setings:
-                                DeployGatePreferenceWindow.OnGUI_PreferenceWindow(preference);
-                                break;
-
-                            case DeployGateWindowUtility.DeployGateSelection.Help:
-                            default:
-                                DeployGateHelpWindow.OnGUI_DeployGateHelpWindow();
-                                break;
-                        }
-                    }
-
-                    GUILayout.EndVertical();
-
+                    GUILayout.Space(30);
+                    EditorGUIUtility.LookLikeControls(180f);
+                    GUI.DrawTexture(new Rect(0, 0, Screen.width * 0.24f, Screen.height), DeployGateWindowUtility.backgroundTexture);
+                    GUI.Label(new Rect(0, 0, Screen.width * 0.24f, Screen.height), "", "PreferencesSectionBox");
+                    sectionStyle.normal.textColor = EditorGUIUtility.isProSkin ? new Color(0.7f, 0.7f, 0.7f, 1) : Color.black;
+                    selection = (DeployGateWindowUtility.DeployGateSelection)GUILayout.SelectionGrid((int)selection, secsions, 1, sectionStyle);
+                    sectionStyle.onNormal.background = DeployGateWindowUtility.onNomalTexture;
                 }
-                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
+
+
+                GUILayout.BeginVertical();
+                {
+                    switch (selection)
+                    {
+                        case DeployGateWindowUtility.DeployGateSelection.BuildUpload:
+                            DeployGateUploadWindow.OnGUI_BuildWindow();
+                            break;
+
+                        case DeployGateWindowUtility.DeployGateSelection.Members:
+                            DeployGateMembersWindow.OnGUI_DeployGateMembersWindow();
+                            break;
+
+                        case DeployGateWindowUtility.DeployGateSelection.Setings:
+                            DeployGatePreferenceWindow.OnGUI_PreferenceWindow();
+                            break;
+
+                        default:
+                            DeployGateHelpWindow.OnGUI_DeployGateHelpWindow();
+                            break;
+                    }
+                }
+
+                GUILayout.EndVertical();
+
             }
-            catch (System.InvalidOperationException)
-            {
-            }
+            GUILayout.EndHorizontal();
         }
     }
 }
