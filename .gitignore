@@ -4,6 +4,8 @@ deploygate-small.xcf
 deploygate-big.xcf
 deploygate-icon.png
 DeployGate/MessageLogs
+DeployGatePreference.asset
+DeployGatePreference.asset.meta
 Temp
 Library
 *.csproj

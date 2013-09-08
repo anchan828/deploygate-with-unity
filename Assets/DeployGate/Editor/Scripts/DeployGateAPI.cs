@@ -89,7 +89,7 @@ namespace DeployGate
         {
 #if UNITY_EDITOR_OSX
             string url = string.Format(InviteApi, Asset.preference.user.username, PlayerSettings.bundleIdentifier);
-            var process = new Process();
+            var process = new System.Diagnostics.Process();
             process.StartInfo.FileName = "curl";
             process.StartInfo.Arguments = string.Format("-X DELETE -F \"users=[{0}]\" -F \"token={1}\" {2}", member.name, Asset.preference.user.token, url);
             process.Start();
